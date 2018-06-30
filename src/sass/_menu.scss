@@ -1,0 +1,137 @@
+/* Menu
+    ======================= */
+
+
+.menu {
+    height: 80px;
+    background-color: transparentize($colorW,.2);
+
+    .logo img {
+        max-width: 100%;
+        height: auto;
+        box-sizing: border-box;
+    }
+}
+
+
+
+/* Кнопка меню
+    ======================= */
+.nav__btn {
+    display: block;
+    width: 30px;
+    height: 80px;
+    position: relative;
+
+    span,
+    span::before,
+    span::after {
+        position: absolute;
+        top: 50%; margin-top: -2px;
+        background-color: $color-text;
+        width: 30px;
+        height: 4px;
+        transition: 0.1s;
+
+        &:hover,
+        &:active {
+            background-color: $color2;
+        }
+    }
+    span::before,
+    span::after {
+        content: "";
+    }
+    span::before {
+        transform: translateY(-10px);
+    }
+    span::after {
+        transform: translateY(10px);
+    }
+}
+
+.nav__btn_active {
+    display: block!important;
+
+    span {
+        height: 0;
+    }
+}
+
+.nav__btn_active span::before {
+    transform: rotate(-45deg);
+}
+
+.nav__btn_active span::after {
+    transform: rotate(45deg);
+}
+
+.drop-menu>ul>li>a {
+    color: $colorW;
+    line-height: 45px;
+    font-weight: 400;
+    font-size: 1.1em;
+}
+
+.items-center {
+    align-items: center;
+}
+ul.nav__ul.nav__ul_active {
+    position: absolute;
+    left: 0;
+    display: flex !important;
+    flex-direction: column;
+    background-color: $color-text;
+    z-index: 1;
+    padding: 30px;
+    min-width: 260px;
+
+    a {
+        color: $colorW;
+        line-height: 60px;
+    }
+}
+
+@media (max-width: 960px) {
+    
+    .nav__ul,
+    .drop-menu {
+        display: none !important;
+    }
+    
+
+    .topL .row-between {
+        flex-direction: column;
+        font-size: 0.8em;
+    }
+    
+    .drop-menu.drop-menu-active {
+        display: block !important;
+        position: relative;
+        z-index: 2;
+        opacity: 1;
+        visibility: visible;
+        margin-right: -30px;
+        margin-top: 0;
+        left: 0;
+    }
+}
+
+@media (min-width: 960px) {
+    
+    .nav__btn {
+        display: none;
+    }
+    
+}
+
+@media (max-width: 1200px) {
+    
+    .icon-caret-down {
+        display: none;
+    }
+
+    .nav__ul a {
+        padding-right: 22px;
+    }
+}

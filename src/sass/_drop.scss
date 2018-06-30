@@ -1,0 +1,170 @@
+@import "_base";
+@import "_mixins.sass";
+
+//---------------- выпадающий список
+
+.topL-left__li {
+	position: relative;
+	
+	&:hover {
+		.drop {
+			opacity: 1;
+			margin-top: 0;
+			left: 0;
+			visibility: visible;
+		}
+	}
+}
+
+
+.drop {
+	background-color: $colorW;
+
+	&:before {
+		@include arr(14, 7, $colorW, t);
+	}
+}
+
+.nav__ul li {
+	position: relative;
+	
+	&:hover {
+		.drop-menu {
+			opacity: 1;
+			margin-top: 0;
+			left: 0;
+			visibility: visible;
+		}
+	}
+}
+
+.drop-menu {
+	background-color: $color1;
+
+	&:before {
+		@include arr(14, 7, $color1, t);
+	}
+}
+
+.drop,
+.drop-menu {
+	position: absolute;
+	//border: 4px solid $border-color;
+	box-shadow: 0 2px 5px 0 rgba(30,30,30,.09);
+	padding: 20px 35px;
+	width: 250px;
+	opacity: 0;
+	margin-left: -30px;
+	transition: opacity 0.3s, margin-top 0.1s;
+	margin-top: 30px;
+	visibility: hidden;
+	left: -10000px;
+	z-index: 1;
+
+	&:before {
+		content: "";
+		display: block;
+		position: absolute;
+		bottom: 100%;
+		left: 40px;
+	}
+}
+.drop li a {
+	line-height: 30px;
+	color: $color-text;
+}
+
+//-------------------- иконка в мобильном меню
+.nav__ul_active .nav__icon-drop-menu {
+	display: block;
+	width: 60px;
+	height: 60px;
+	position: relative;
+	float: right;
+	margin-right: -1em;
+
+	i {
+		left: 50%; margin-left: -2px;
+	}
+
+	i,
+	i::after {
+		position: absolute;
+		top: 50%; margin-top: -2px;
+		background-color: $colorW;
+		width: 20px;
+		height: 4px;
+		transition: 0.1s;
+
+		&:hover,
+		&:active {
+			background-color: $color2;
+		}
+	}
+	i::after {
+		content: "";
+		transform: translateY(10px);
+		transform: rotate(-90deg);
+	}
+}
+.nav__icon-drop-menu-active i {
+	transform: rotate(-45deg);	
+}
+
+//-------------------- dropdown
+
+.dropdown-ul {
+	position: absolute;
+	background-color: $color4;
+	padding: 20px;
+	width: 250px;
+	opacity: 0;
+	margin-left: -15px;
+	transition: opacity 0.3s, margin-top 0.1s;
+	margin-top: 30px;
+	visibility: hidden;
+	left: -10000px
+
+	&:before {
+		content: "";
+		display: block;
+		position: absolute;
+		bottom: 100%;
+		@include arr(14, 7, $color4, t);
+		left: 40px;
+	}
+
+	a {
+		line-height: 30px;
+	}
+}
+.dropdown-ul.color-w {
+	background-color: $colorW;
+	border: 1px solid $border-color;
+	
+	a {
+		color: $color3;
+		&:hover {
+			color: $color2;
+		}
+	}
+
+	&:before {
+		content: "";
+		display: block;
+		position: absolute;
+		bottom: 100%;
+		@include arr(14, 7, $colorW, t);
+		z-index: 2;
+		left: 40px;
+	}
+	
+	&:after {
+		content: "";
+		display: block;
+		position: absolute;
+		bottom: 100%;
+		@include arr(16, 9, $border-color, t);
+		left: 39px;
+	}
+}
