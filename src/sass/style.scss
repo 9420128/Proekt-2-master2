@@ -1,16 +1,21 @@
 //@import обязательно указывается расширение .css
 
-@import "_base";
-@import "_menu";
-@import "_drop";
-@import "_icon";
-@import "m-style";
 @import "smart-grid";
 @include reset();
+@import "_base";
+@import "_mixins.sass";
+@import "_icon";
+@import "popup";
+@import "_max-460";
+@import "_max-960";
+@import "_min-960";
+@import "_max-1200";
 
 body {
   font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
+  font-size: 16px;
+  min-width: 320px;
+  line-height: 1.5;
 }
 
 a, area, button, input, label, select, summary, textarea {
@@ -19,28 +24,75 @@ a, area, button, input, label, select, summary, textarea {
 
 a {text-decoration: none;}
 
+audio, canvas, img, video,*:after, *:before {
+    max-width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
+
+hr {
+    box-sizing: content-box;
+    height: 0;
+    overflow: visible;
+    text-align: inherit;
+    margin: 0 0 20px 0;
+    border: 0;
+    border-top: 1px solid $color-hr;
+}
+
+
+.divider-small {
+	line-height: 0;
+	margin: 20px 0;
+	border: none;
+
+	&::after {
+	    content: "";
+	    display: inline-block;
+	    width: 100px;
+	    max-width: 100%;
+	    border-top: 5px solid $color2;
+	    vertical-align: top;
+	    border-image: linear-gradient(90deg, #ff8924 0, #ff2300 35%, #ff9d37 100%);
+	    border-image-slice: 1;
+	}
+}
+
 .text-center {
   text-align: center;
 }
 
-main {
-    padding: 80px 0;
-}
-h1 {
+h1, h2, h3, h4 {
     font-family: Ubuntu;
-    font-size: 50px;
-    line-height: 1.1;
     font-weight: 700;
     text-transform: uppercase;
     color: $color-text;
-  }
+ }
+
+h1, .h1 {
+	font-size: 2.500em; // 40px
+    line-height: 1.2;
+}
+
+h2, .h2 {
+	font-size: 1.875em; // 30 px
+    line-height: 1.238;
+}
+
+h3, .h3 {
+	font-size: 1.375em; // 22 px
+    line-height: 1.455;
+}
+
 /* =======================================  btn ============================================= */
-.btn {
+
+[class*=" btn-"],[class^=btn-] {
     overflow: visible;
     color: inherit;
     display: inline-block;
     box-sizing: border-box;
     vertical-align: middle;
+    font-family: 'Ubuntu', sans-serif;
     line-height: 52px;
     text-align: center;
     text-decoration: none;
@@ -50,8 +102,17 @@ h1 {
 }
 
 .btn-def {
-    color: $color2;
-    border: 2px solid #fe7902;
+	color: $color2;
+    border: 4px solid $color2;
+    padding: $btn-pg-height $btn-pg-widt;
+    font-weight: 500;
+    text-transform: uppercase;
+    width: fit-content;
+
+    &:hover {
+    	color: $color-text;
+    	border-color: $color-text;
+    }
 }
 
 /* =======================================  Header ============================================= */
@@ -62,7 +123,8 @@ h1 {
 }
 .topL {
 	background: $color1;
-	
+	padding: 0.4em 0;
+    font-size: 0.95em;
 
 }
 .container {
@@ -70,12 +132,11 @@ h1 {
 	z-index: 2;
 
 }
-.topL {
-	height: auto;
-}
+
+.topL__row,
+.menu__row,
 .row-between {
 	@include row-flex;
-	@include col();
 	justify-content: space-between;
 	align-items: center;
 	font-size: 14px;
@@ -125,6 +186,175 @@ h1 {
 	}
 }
 
+.topL-left__li {
+	position: relative;
+	
+	&:hover {
+		.drop {
+			opacity: 1;
+			margin-top: 0;
+			left: 0;
+			visibility: visible;
+		}
+	}
+}
+
+
+.tel {
+	font-weight: 400;
+    letter-spacing: 1px;
+
+	&:before {                       // разделитель
+		content: "";
+	    width: 1px;
+	    background-color: $colorW;
+	    display: inline-block;
+	    height: 16px;
+	    margin-right: 30px;
+	    vertical-align: middle;
+	}
+}
+
+/* =======================================  dropdown ============================================= */
+
+
+.drop {
+	background-color: $colorW;
+
+	&:before {
+		@include arr(14, 7, $colorW, t);
+	}
+}
+
+.drop-menu {
+	background-color: $color1;
+
+	&:before {
+		@include arr(14, 7, $color1, t);
+	}
+}
+
+.drop,
+.drop-menu {
+	position: absolute;
+	//border: 4px solid $border-color;
+	box-shadow: 0 2px 5px 0 rgba(30,30,30,.09);
+	padding: 20px 35px;
+	width: 250px;
+	opacity: 0;
+	margin-left: -30px;
+	transition: opacity 0.3s, margin-top 0.1s;
+	margin-top: 30px;
+	visibility: hidden;
+	left: -10000px;
+	z-index: 1;
+
+	&:before {
+		content: "";
+		display: block;
+		position: absolute;
+		bottom: 100%;
+		left: 40px;
+	}
+}
+.drop li a {
+	line-height: 30px;
+	color: $color-text;
+}
+
+//-------------------- иконка в мобильном меню
+.nav__ul_active .nav__icon-drop-menu {
+	display: block;
+	width: 60px;
+	height: 60px;
+	position: relative;
+	float: right;
+	margin-right: -1em;
+
+	i {
+		left: 50%; margin-left: -2px;
+	}
+
+	i,
+	i::after {
+		position: absolute;
+		top: 50%; margin-top: -2px;
+		background-color: $colorW;
+		width: 20px;
+		height: 4px;
+		transition: 0.1s;
+
+		&:hover,
+		&:active {
+			background-color: $color2;
+		}
+	}
+	i::after {
+		content: "";
+		transform: translateY(10px);
+		transform: rotate(-90deg);
+	}
+}
+.nav__icon-drop-menu-active i {
+	transform: rotate(-45deg);	
+}
+
+.dropdown-ul {
+	position: absolute;
+	background-color: $color4;
+	padding: 20px;
+	width: 250px;
+	opacity: 0;
+	margin-left: -15px;
+	transition: opacity 0.3s, margin-top 0.1s;
+	margin-top: 30px;
+	visibility: hidden;
+	left: -10000px
+
+	&:before {
+		content: "";
+		display: block;
+		position: absolute;
+		bottom: 100%;
+		@include arr(14, 7, $color4, t);
+		left: 40px;
+	}
+
+	a {
+		line-height: 30px;
+	}
+}
+.dropdown-ul.color-w {
+	background-color: $colorW;
+	border: 1px solid $border-color;
+	
+	a {
+		color: $color3;
+		&:hover {
+			color: $color2;
+		}
+	}
+
+	&:before {
+		content: "";
+		display: block;
+		position: absolute;
+		bottom: 100%;
+		@include arr(14, 7, $colorW, t);
+		z-index: 2;
+		left: 40px;
+	}
+	
+	&:after {
+		content: "";
+		display: block;
+		position: absolute;
+		bottom: 100%;
+		@include arr(16, 9, $border-color, t);
+		left: 39px;
+	}
+}
+
 /* =======================================  vcard ============================================= */
 
 .vcard {
@@ -151,22 +381,7 @@ span.onlain {
 	text-transform: uppercase;
 }
 
-.tel {
-	font-size: 24px;
-    font-weight: 400;
-    color: $color-text;
-	letter-spacing: 1px;
 
-	/*&:before {                       // разделитель
-		content: "";
-	    width: 1px;
-	    background-color: $colorW;
-	    display: inline-block;
-	    height: 16px;
-	    margin-right: 30px;
-	    vertical-align: middle;
-	}*/
-}
 
 .icon-caret-down {
 	font-size: 12px;
@@ -175,21 +390,118 @@ span.onlain {
 
 /* =======================================  Menu  ============================================= */
 
-.nav {
-    @include row-flex;
-    @include col();
-    justify-content: flex-end;
+.menu {
+    position: relative;
+    background-color: transparentize($colorW,.2);
+
+    .logo img {
+        max-width: 100%;
+        height: 36px;
+        box-sizing: border-box;
+    }
+}
+
+.menu__row {
+    height: 90px;
+}
+
+
+.nav__ul li {
+	position: relative;
+	
+	&:hover {
+		.drop-menu {
+			opacity: 1;
+			margin-top: 0;
+			left: 0;
+			visibility: visible;
+		}
+	}
+}
+
+ul.nav__ul.nav__ul_active {
+    position: absolute;
+    left: 0;
+    top: 90px;
+    display: flex !important;
+    flex-direction: column;
+    background-color: transparentize($color1, .1);
+    z-index: 1;
+    padding: 30px;
+    min-width: 260px;
+
+    a {
+        color: $colorW;
+        line-height: 60px;
+    }
 }
 
 
 
-/* Cover
-	======================= */
+/* Кнопка меню
+    ======================= */
+.nav__btn {
+    display: none;
+    width: 30px;
+    height: 80px;
+    position: relative;
+
+    span,
+    span::before,
+    span::after {
+        position: absolute;
+        top: 50%; margin-top: -2px;
+        background-color: $color-text;
+        width: 30px;
+        height: 4px;
+        transition: 0.1s;
+
+        &:hover,
+        &:active {
+            background-color: $color2;
+        }
+    }
+    span::before,
+    span::after {
+        content: "";
+    }
+    span::before {
+        transform: translateY(-10px);
+    }
+    span::after {
+        transform: translateY(10px);
+    }
+}
+
+.nav__btn_active {
+    display: block!important;
+
+    span {
+        height: 0;
+    }
+}
+
+.nav__btn_active span::before {
+    transform: rotate(-45deg);
+}
+
+.nav__btn_active span::after {
+    transform: rotate(45deg);
+}
+
+.drop-menu>ul>li>a {
+    color: $colorW;
+    line-height: 45px;
+    font-weight: 400;
+    font-size: 1.1em;
+}
+
+/* =======================================  cover  ============================================= */
+
 .cover {
 	background-position: center center;
 	background-size: cover;
 	background-repeat: no-repeat;
-	height: 100vh;
 	position: relative;
 	z-index: 0;
 
@@ -200,9 +512,15 @@ span.onlain {
 		bottom: 0;
 		left: 0;
 		content: "";
-		background-color: transparentize($colorW,.2);
+		background-color: transparentize($colorW,.8);
 		z-index: -1;
 	}
+}
+
+.home-cover {
+	margin-top: -90px;
+	z-index: -2;
+	height: 860px;
 }
 
 /* baner - главная
@@ -211,22 +529,143 @@ span.onlain {
 
 .baner-1 {
 	position: absolute;
-	background-color: transparentize($color1,.2);
+	//background-color: transparentize($color1,.2);
 	top: 50%;
-	margin-top: -160px;
+	height: 351px; margin-top: -160px;
+	width: 80%;
 	margin-left: -15px;
-	height: 351px;
-	width: 50%;
-	max-width: 551px;
+	max-width: 550px;
 }
 
-.row {
-	@include row-flex();
-    @include md(justify-content, center);
-}
+/* =======================================  card  ============================================= */
 
 .col-3 {
+	@include row-flex();
+    @include md(justify-content, center);
+    margin-top: $mg-md;
+}
+
+.col-3__item {
 	@include col();
     @include size(4);
-    @include size-md(12);
+    @include size-sm(6);
+    @include size-xs(12);
+    margin-bottom: $mg-md;
+	background: #fff;
+	//padding-bottom: $mg-sm;
 }
+    
+.cart {
+    &:hover,
+    &:focus,
+    &:active {
+    	box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+
+    p {
+    	padding: $mg-sm;
+    }
+
+    &__btn {
+    	display: block;
+    	padding-bottom: $mg-md;
+    	color: $muted;
+    }
+}
+
+/* =======================================  home ============================================= */
+
+.home {
+	margin-top: $mg-lg;
+	text-align: center;
+}
+
+.home .cart h2 {
+	color: $color2;
+	font-size: $fs-md;
+	font-weight: 600;
+}
+
+.home-2 {
+	//background-color: $color-hr;
+
+	&__item {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: auto 1fr auto;
+		grid-gap: 40px;
+		grid-template-areas: 
+		    "img h3"
+		    "img ul"
+		    "img a";
+	}
+
+	&__img {
+		grid-area: img;
+	}
+	
+	&__h3 {
+		grid-area: h3;
+	}
+	
+	&__ul {
+		grid-area: ul;
+	}
+	& a {
+		grid-area: a;
+	}
+}
+
+.home-3 {
+
+	&__item {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: auto 1fr;
+		grid-gap: 40px;
+		grid-template-areas: 
+		    "h3 h3"
+		    "ul ul-2"
+		    "ul a";
+	}
+
+	&__h3 {
+		grid-area: h3;
+	}
+	
+	&__ul {
+		grid-area: ul;
+	}
+	&__ul-2 {
+		grid-area: ul-2;
+	}
+	& a {
+		grid-area: a;
+	}
+}
+
+.home-4 {
+	text-align: center;
+
+	&__row {
+		@include row-flex();
+	    @include md(justify-content, center);
+	    margin-top: $mg-md;
+	}
+
+	&__item {
+		@include col();
+	    @include size(6);
+	    @include size-md(12);
+	    max-width: 570px;
+	    //@include size-xs(12);
+	}
+}
+
+.grid-auto {
+	display: grid;
+	grid-template-columns: repeat(auto-fit ,minmax(320px, 1fr));
+	grid-gap: 40px;
+}
+
+

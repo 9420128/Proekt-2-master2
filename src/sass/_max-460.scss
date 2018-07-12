@@ -1,0 +1,21 @@
+@media (max-width: 460px) {
+    
+    .container .topL__row {
+    	justify-content: center;
+	}
+
+	.tel:before,
+	.topL-rigt__ul {
+		display: none !important;
+	}
+
+    .nav__ul a {
+        padding-right: 22px;
+    }
+    .cover.home-cover {
+    	height: 600px
+    }
+
+
+
+}

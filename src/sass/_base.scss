@@ -1,10 +1,157 @@
-$color1: #303031; //#2c3e50
-$color2: #db7b3b;
+$color1: #2c3e50; // 303031
+$color2: #fe7902; //   // #db7b3b
 $color3 :#777;
 $color4 :#404042;
 $colorW :#fff;
 $border-color: #404042;
 $color-text: #3d3d3d;
 $muted: #9fa3b0;
+$color-hr: #e7e7e7;
+
+/* =======================================  margin  ============================================= */
+
+$mg-xs: 0.938em; // 15 px
+$mg-sm: 1.875em; // 30 px
+$mg-md: 3.750em; // 60 px
+$mg-lg: 5.625em; // 90 px
+
+/* =======================================  padding  ============================================= */
+
+.pd-xs {
+	padding: $mg-xs 0; // 15 px
+}
+.pd-sm {
+	padding: $mg-sm 0; // 30 px
+}
+.pd-md {
+	padding: $mg-md 0; // 60 px
+}
+.pd-lg {
+	padding: $mg-lg 0; // 90 px
+}
+
+/* =======================================  font-size  ============================================= */
+
+$fs-xs: 0.625em; // 10px
+$fs-sm: 0.750em; // 12px
+$fs-md: 1.250em; // 20px
+$fs-lg: 1.500em; // 24px
+
+.text-xs {
+	font-size: $fs-xs;
+}
+.text-sm {
+	font-size: $fs-sm;
+}
+.text-md {
+	font-size: $fs-md;
+}
+.text-lg {
+	font-size: $fs-lg
+}
+
+/* =======================================  ul>li  ============================================= */
+
+.chek {
+	//margin: $mg-sm 0;
+
+	li {
+		margin-bottom: 10px;
+		padding-left: calc(1.5em + 10px);
+	}
+	
+	li::before {
+		display: inline-block;
+		font-family: icomoon;
+		padding-right: $mg-xs;
+		content: "\ea10";
+		color: $color2;
+		margin-left: calc(-1.5em - 10px);
+	}
+}
+
+/* =======================================  btn ============================================= */
+
+$btn-pg-widt: 2em;
+$btn-pg-height: 0;
+
+/* =======================================  text-align  ============================================= */
+
+.text-left {
+	text-align: left;
+}
+
+.text-right {
+	text-align: right;
+}
+
+.text-center {
+	text-align: center;
+}
+
+/* =======================================  slick-slider  ============================================= */
 
 
+.slick-prev, .slick-next {
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+    top: 60%;
+    display: block;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    cursor: pointer;
+    color: transparent;
+    border: none;
+    outline: none;
+    background: transparent;
+    z-index: 2;
+}
+
+.slick-prev:hover,
+.slick-prev:focus,
+.slick-prev:active,
+.slick-next:hover,
+.slick-next:focus,
+.slick-next:active, {
+	background: transparentize($colorW,.7);
+}
+
+.slick-prev:before {
+    content: '\f053';
+}
+
+.slick-prev {
+    left: 30px;
+}
+
+.slick-next {
+    right: 30px;
+}
+
+.slick-next:before {
+    content: '\f054';
+}
+
+.slick-prev:before, .slick-next:before {
+    font-family: 'Icomoon';
+    font-size: 32px;
+    line-height: 1;
+    opacity: .75;
+    color: $color2;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.js-topL-modal {
+	position: relative;
+	background: #FFF;
+	padding: 40px 20px;
+	width: 100%;
+	max-width: 460px;
+	margin: 20px auto;
+}
